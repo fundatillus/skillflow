@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Remove Certification — Skillflow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <h2 class="mb-3">Remove Certification</h2>
+        <p>Are you sure you want to remove <strong>{{ record.cert_id_fk }}</strong> from your profile?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Remove</button>
+            <a href="{% url 'skillflow:dashboard' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

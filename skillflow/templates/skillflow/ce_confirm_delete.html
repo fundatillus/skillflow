@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete CE Record — Skillflow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <h2 class="mb-3">Delete CE Record</h2>
+        <p>Are you sure you want to delete <strong>{{ ce }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'skillflow:dashboard' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

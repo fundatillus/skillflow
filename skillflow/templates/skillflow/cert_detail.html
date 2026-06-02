@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ record.cert_id_fk }} — Skillflow{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h2>{{ record.cert_id_fk.name }}</h2>
+        <p class="text-muted mb-0">{{ record.cert_id_fk.vendor_id_fk }}</p>
+    </div>
+    <div>
+        {% if record.status == 'active' %}
+            <span class="badge bg-success fs-6">Active</span>
+        {% elif record.status == 'expiring' %}
+            <span class="badge bg-warning text-dark fs-6">Expiring Soon</span>
+        {% elif record.status == 'expired' %}
+            <span class="badge bg-danger fs-6">Expired</span>
+        {% else %}
+            <span class="badge bg-secondary fs-6">Unknown</span>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr><th>Cert Number</th><td>{{ record.cert_number|default:"—" }}</td></tr>
+            <tr><th>Effective Date</th><td>{{ record.eff_date }}</td></tr>
+            <tr><th>Expiration Date</th><td>{{ record.exp_date|default:"—" }}</td></tr>
+            <tr><th>CE Required</th><td>{{ record.cert_id_fk.units_required }} hours</td></tr>
+            <tr><th>CE Logged</th><td>{{ total_ce }} hours</td></tr>
+        </table>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h4>Continuing Education Records</h4>
+    <a href="{% url 'skillflow:ce-add' %}" class="btn btn-sm btn-outline-primary">+ Log CE</a>
+</div>
+
+{% if ce_records %}
+<table class="table table-hover">
+    <thead class="table-secondary">
+        <tr>
+            <th>Title</th>
+            <th>Presenter</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Certificate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ce in ce_records %}
+        <tr>
+            <td>{{ ce.title }}</td>
+            <td>{{ ce.presenter }}</td>
+            <td>{{ ce.date }}</td>
+            <td>{{ ce.hours }}</td>
+            <td>
+                {% if ce.certificate_file %}
+                    <a href="{{ ce.certificate_file.url }}" target="_blank">Download</a>
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'skillflow:ce-edit' ce.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a href="{% url 'skillflow:ce-delete' ce.pk %}" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">No CE records linked to this certification yet.</p>
+{% endif %}
+
+<div class="mt-3">
+    <a href="{% url 'skillflow:cert-edit' record.pk %}" class="btn btn-outline-primary">Edit Cert</a>
+    <a href="{% url 'skillflow:dashboard' %}" class="btn btn-outline-secondary ms-2">Back to Dashboard</a>
+</div>
+{% endblock %}

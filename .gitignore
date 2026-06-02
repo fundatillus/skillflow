@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Django files
+db.sqlite3
+media/
+.env
+
+# Development files
+.claude
+.ruff_cache
+
+# File system artifacts
+.DS_Store

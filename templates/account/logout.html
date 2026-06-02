@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Logout — Skillflow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4 text-center">
+        <h2 class="mb-4">Log Out</h2>
+        <p>Are you sure you want to log out?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Log Out</button>
+            <a href="{% url 'skillflow:dashboard' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

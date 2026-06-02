@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load skillflow_extras %}
+
+{% block title %}Dashboard — Skillflow{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>My Certifications</h2>
+    <div>
+        <a href="{% url 'skillflow:cert-add' %}" class="btn btn-primary">+ Add Certification</a>
+        <a href="{% url 'skillflow:ce-add' %}" class="btn btn-outline-secondary ms-2">+ Log CE</a>
+    </div>
+</div>
+
+{% if records %}
+<table class="table table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Certification</th>
+            <th>Cert #</th>
+            <th>Effective</th>
+            <th>Expires</th>
+            <th>Status</th>
+            <th>CE Progress</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            <td><a href="{% url 'skillflow:cert-detail' record.pk %}">{{ record.cert_id_fk }}</a></td>
+            <td>{{ record.cert_number|default:"—" }}</td>
+            <td>{{ record.eff_date }}</td>
+            <td>{{ record.exp_date|default:"—" }}</td>
+            <td>
+                {% if record.status == 'active' %}
+                    <span class="badge bg-success">Active</span>
+                {% elif record.status == 'expiring' %}
+                    <span class="badge bg-warning text-dark">Expiring Soon</span>
+                {% elif record.status == 'expired' %}
+                    <span class="badge bg-danger">Expired</span>
+                {% else %}
+                    <span class="badge bg-secondary">Unknown</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="progress mb-1" style="height: 18px;">
+                    <div class="progress-bar {% if ce_progress|get_item:record.pk >= 100 %}bg-success{% endif %}"
+                         role="progressbar"
+                         style="width: {{ ce_progress|get_item:record.pk }}%"
+                         aria-valuenow="{{ ce_progress|get_item:record.pk }}"
+                         aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+                <small class="text-muted">{{ ce_hours|get_item:record.pk|default:"0" }} / {{ record.cert_id_fk.units_required }} hrs</small>
+            </td>
+            <td>
+                <a href="{% url 'skillflow:cert-edit' record.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a href="{% url 'skillflow:cert-delete' record.pk %}" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">
+    No certifications yet. <a href="{% url 'skillflow:cert-add' %}">Add your first one.</a>
+</div>
+{% endif %}
+{% endblock %}
