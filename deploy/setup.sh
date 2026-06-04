@@ -49,13 +49,11 @@ chmod -R 750 "$APP_DIR"
 
 # ── uv + Python ───────────────────────────────────────────────────────────────
 if ! command -v uv &>/dev/null; then
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    export PATH="$HOME/.local/bin:$PATH"
+    curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 fi
 
 sudo -u "$APP_USER" bash -c "
     cd '$APP_DIR'
-    export PATH=\"\$HOME/.local/bin:\$PATH\"
     uv python install
     uv sync --no-dev
 "
