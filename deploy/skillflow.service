@@ -1,0 +1,18 @@
+[Unit]
+Description=Skillflow Gunicorn daemon
+After=network.target postgresql.service
+
+[Service]
+User=skillflow
+Group=www-data
+WorkingDirectory=/var/www/skillflow
+EnvironmentFile=/etc/skillflow/env
+ExecStart=/var/www/skillflow/.venv/bin/gunicorn -c gunicorn.conf.py project.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+RuntimeDirectory=skillflow
+RuntimeDirectoryMode=0770
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
