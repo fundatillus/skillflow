@@ -13,7 +13,6 @@ git pull --ff-only
 
 sudo -u "$APP_USER" bash -c "
     cd '$APP_DIR'
-    export PATH=\"\$HOME/.local/bin:\$PATH\"
     set -a; source '$ENV_FILE'; set +a
     uv sync --no-dev
     uv run python manage.py migrate --noinput
