@@ -34,7 +34,8 @@ BEGIN
     END IF;
 END
 \$\$;
-CREATE DATABASE IF NOT EXISTS skillflow OWNER $APP_USER;
+SELECT 'CREATE DATABASE skillflow OWNER $APP_USER'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'skillflow')\gexec
 SQL
 
 # ── Clone repo ────────────────────────────────────────────────────────────────
