@@ -22,14 +22,6 @@ def index(request):
     return render(request, "pages/index.html")
 
 
-# About page
-# def about(request):
-    # context = {
-        # "name": "Adam", 
-        # "age": "nun-ya",
-    # }
-    # return render(request, "pages/about.html", context)
-
 class AboutPageView(TemplateView):
     template_name = 'pages/about.html'
 
