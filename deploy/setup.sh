@@ -25,12 +25,20 @@ usermod -aG www-data "$APP_USER"
 # ── PostgreSQL ────────────────────────────────────────────────────────────────
 systemctl enable --now postgresql
 
-DB_PASS=$(openssl rand -hex 24)
+# Re-use the existing password if the env file was already written; otherwise generate a new one.
+if [ -f "$ENV_DIR/env" ]; then
+    DB_PASS=$(grep '^DB_PASSWORD=' "$ENV_DIR/env" | cut -d= -f2)
+else
+    DB_PASS=$(openssl rand -hex 24)
+fi
+
 sudo -u postgres psql <<SQL
 DO \$\$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '$APP_USER') THEN
         CREATE ROLE $APP_USER WITH LOGIN PASSWORD '$DB_PASS';
+    ELSE
+        ALTER ROLE $APP_USER WITH PASSWORD '$DB_PASS';
     END IF;
 END
 \$\$;
@@ -89,7 +97,6 @@ fi
 # ── Django setup ──────────────────────────────────────────────────────────────
 sudo -u "$APP_USER" bash -c "
     cd '$APP_DIR'
-    export PATH=\"\$HOME/.local/bin:\$PATH\"
     set -a; source '$ENV_DIR/env'; set +a
     uv run python manage.py migrate --noinput
     uv run python manage.py collectstatic --noinput
