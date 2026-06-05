@@ -1,8 +1,26 @@
 <!-- pages/templates/pages/index.html -->
 {% extends 'base.html' %}
 
+{% block title %}Skillflow — Track Your Certifications{% endblock %}
+
 {% block content %}
-
-<h1>Home</h1>
-
+<div class="row justify-content-center">
+  <div class="col-lg-7 text-center py-5">
+    <h1 class="display-4 fw-bold mb-3">Skillflow</h1>
+    <p class="lead mb-4">
+      Stay on top of your professional certifications. Skillflow tracks your renewal dates,
+      continuing education requirements, and CE records so you never let a cert lapse again.
+    </p>
+    <p class="text-muted mb-5">
+      Built for IT and security professionals managing multiple certifications across
+      vendors like CompTIA, ISC2, EC-Council, and more.
+    </p>
+    {% if user.is_authenticated %}
+      <a href="{% url 'skillflow:dashboard' %}" class="btn btn-primary btn-lg">Go to Dashboard</a>
+    {% else %}
+      <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg me-2">Register to Get Started</a>
+      <a href="{% url 'account_login' %}" class="btn btn-outline-secondary btn-lg">Log In</a>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
