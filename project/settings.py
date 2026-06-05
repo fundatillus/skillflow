@@ -162,6 +162,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_ADAPTER = 'skillflow.adapters.AccountAdapter'
 
 LOGGING = {
     'version': 1,
