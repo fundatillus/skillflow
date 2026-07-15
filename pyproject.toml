@@ -5,8 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "cryptography>=48.0.1",
-    "django>=6.0.6",
+    "cryptography>=49.0.0",
+    "django>=6.0.7",
     "django-allauth>=65.18.0",
     "gunicorn>=23.0.0",
     "idna==3.18",
@@ -18,5 +18,5 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "ruff>=0.15.15",
+    "ruff>=0.15.20",
 ]

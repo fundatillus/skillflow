@@ -59,7 +59,7 @@
             <td>{{ ce.hours }}</td>
             <td>
                 {% if ce.certificate_file %}
-                    <a href="{{ ce.certificate_file.url }}" target="_blank">Download</a>
+                    <a href="{% url 'skillflow:ce-certificate' ce.pk %}" target="_blank">View</a>
                 {% else %}
                     —
                 {% endif %}

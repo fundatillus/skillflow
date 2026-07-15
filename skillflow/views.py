@@ -16,6 +16,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CertificationRecordForm, ContinuingEducationRecordForm
@@ -134,3 +135,11 @@ def ce_delete(request, pk):
         messages.success(request, 'CE record deleted.')
         return redirect('skillflow:dashboard')
     return render(request, 'skillflow/ce_confirm_delete.html', {'ce': ce})
+
+
+@login_required
+def serve_certificate(request, pk):
+    ce = get_object_or_404(ContinuingEducationRecord, pk=pk, user=request.user)
+    if not ce.certificate_file:
+        raise Http404
+    return FileResponse(ce.certificate_file.open('rb'), as_attachment=False)
