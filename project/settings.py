@@ -30,7 +30,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-wa)#svndj@1j##j)5=5b&gr95cy$&r##hglbwx(2=0f2ws)j+p')
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 

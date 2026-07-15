@@ -20,4 +20,8 @@ sudo -u "$APP_USER" bash -c "
 "
 
 systemctl restart skillflow
+
+cp "$APP_DIR/deploy/nginx.conf" /etc/nginx/sites-available/skillflow
+nginx -t && systemctl reload nginx
+
 echo "Skillflow updated and restarted."

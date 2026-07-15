@@ -28,4 +28,5 @@ urlpatterns = [
     path('ce/add/', views.ce_add, name='ce-add'),
     path('ce/<int:pk>/edit/', views.ce_edit, name='ce-edit'),
     path('ce/<int:pk>/delete/', views.ce_delete, name='ce-delete'),
+    path('ce/<int:pk>/certificate/', views.serve_certificate, name='ce-certificate'),
 ]
