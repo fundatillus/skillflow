@@ -4,7 +4,7 @@ asgiref==3.12.1
     # via
     #   django
     #   django-allauth
-certifi==2026.6.17
+certifi==2026.7.22
     # via requests
 cffi==2.1.0 ; platform_python_implementation != 'PyPy'
     # via cryptography
