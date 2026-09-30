@@ -32,7 +32,7 @@ psycopg-binary==3.3.4 ; implementation_name != 'pypy'
     # via psycopg
 pycparser==3.0 ; implementation_name != 'PyPy' and platform_python_implementation != 'PyPy'
     # via cffi
-pyjwt==2.13.0
+pyjwt==2.15.0
     # via skillflow
 python-dateutil==2.9.0.post0
     # via skillflow
